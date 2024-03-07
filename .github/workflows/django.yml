@@ -1,0 +1,24 @@
+name: Aplicação Django
+
+on: [pull_request]
+
+jobs:
+  build:
+    env:
+      PIPENV_NO_INHERIT:
+      PIPENV_IGNORE_VIRTUALENVS: 1
+    runs-on: ubuntu-latest
+
+    steps:
+      uses: actions/checkout@2
+      - name: Set up Python 3.10.12
+        uses: actions/setup-python@1
+        with:
+          python-version 3.10.12
+      - name:  Instalar Dependências
+        run:
+          pip install pipenv
+          sync pipnv --dev
+      - name: Rodoar Testes automáticos
+        run:
+          pipenv run pytest webdev
